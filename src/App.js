@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import {
+  Dashbord,
+  SectionNavbar,
+  Siedebar,
+} from "./components/Admin-components/index";
+import "./style.css";
 
 function App() {
+  const [menuAct, setMenuAct] = useState(false);
+  const [changeColor, setChangeColor] = useState(false);
+  const handleClickMenu = () => {
+    setMenuAct(() => !menuAct);
+  };
+  const hendleChangeColor = () => {
+    setChangeColor(() => !changeColor);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={changeColor ? "body_admin dark" : "body_admin"}>
+      <Siedebar actMenu={menuAct} />
+      <div id="content">
+        <SectionNavbar
+          actMenu={menuAct}
+          hendleClickMenu={handleClickMenu}
+          hendleChangeColor={hendleChangeColor}
+        />
+        <Dashbord />
+      </div>
     </div>
   );
 }
