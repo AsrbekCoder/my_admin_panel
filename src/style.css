@@ -44,6 +44,7 @@ html {
 .body_admin {
   background: var(--grey);
   overflow-x: hidden;
+  height: 100vh;
 }
 
 /* SIDEBAR */
@@ -346,6 +347,15 @@ html {
   grid-gap: 10px;
   font-weight: 500;
 }
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: 0.5s;
+}
+button:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
 
 #content main .box-info {
   display: grid;
@@ -443,15 +453,19 @@ html {
   grid-gap: 12px;
   padding-left: 6px;
 }
-#content main .table-data .order table td img {
+#content main .table-data .order table td span {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  object-fit: cover;
+  background-color: #3c91e6;
+  color: #fff;
+  text-align: center;
+  line-height: 36px;
 }
 #content main .table-data .order table tbody tr:hover {
   background: var(--grey);
 }
+
 #content main .table-data .order table tr td .status {
   font-size: 10px;
   padding: 6px 16px;
