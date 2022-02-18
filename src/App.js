@@ -1,34 +1,36 @@
-import React, { useState } from "react";
-import {
-  Dashbord,
-  SectionNavbar,
-  Siedebar,
-} from "./components/Admin-components/index";
+import React, { Component } from "react";
+import AdminPannel from "./Pages/AdminPannel";
+// import LoginInputs from "./Pages/Login/LoginInputs";
 import "./style.css";
 
-function App() {
-  const [menuAct, setMenuAct] = useState(false);
-  const [changeColor, setChangeColor] = useState(false);
-  const handleClickMenu = () => {
-    setMenuAct(() => !menuAct);
-  };
-  const hendleChangeColor = () => {
-    setChangeColor(() => !changeColor);
-  };
+class App extends Component {
+  // state = {
+  //   getAllCheck: null,
+  //   boolNames: false,
+  // };
 
-  return (
-    <div className={changeColor ? "body_admin dark" : "body_admin"}>
-      <Siedebar actMenu={menuAct} />
-      <div id="content">
-        <SectionNavbar
-          actMenu={menuAct}
-          hendleClickMenu={handleClickMenu}
-          hendleChangeColor={hendleChangeColor}
-        />
-        <Dashbord />
-      </div>
-    </div>
-  );
+  // getUsers = (user, password) => {
+  //   const gettings = {
+  //     user,
+  //     password,
+  //   };
+  //   localStorage.setItem("users", JSON.stringify(gettings));
+  //   let main = JSON.parse(localStorage.getItem("users"));
+  //   this.setState({ getAllCheck: main });
+  //   if (main?.user === "Asrbek Coder" || main?.password === "asrbek1625") {
+  //     this.setState({ boolNames: true });
+  //   }
+  // };
+
+  render() {
+    // if (this.state.boolNames) return <Navigate to="admin" />;
+
+    return (
+      <>
+        <AdminPannel />
+      </>
+    );
+  }
 }
 
 export default App;

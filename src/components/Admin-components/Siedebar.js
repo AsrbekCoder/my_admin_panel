@@ -1,10 +1,20 @@
 import React, { useState } from "react";
-import icon from "../../assest/logo.jpg";
+import { Link } from "react-router-dom";
 const dashborList = [
-  { id: 1, name: "Dashboard", icon: "bx bxs-dashboard" },
-  { id: 2, name: "Change Cities", icon: "bx bxs-shopping-bag-alt" },
-  { id: 3, name: "Users", icon: "bx bxs-doughnut-chart" },
-  { id: 4, name: "Store", icon: "bx bxs-message-dots" },
+  { id: 1, name: "Users", icon: "bx bxs-dashboard", path: "" },
+  {
+    id: 2,
+    name: "Add Product",
+    icon: "bx bxs-shopping-bag-alt",
+    path: "addProduct",
+  },
+  {
+    id: 3,
+    name: "Dashboard",
+    icon: "bx bxs-doughnut-chart",
+    path: "dashboard",
+  },
+  { id: 4, name: "Store", icon: "bx bxs-message-dots", path: "store" },
 ];
 
 const Siedebar = ({ actMenu }) => {
@@ -17,20 +27,22 @@ const Siedebar = ({ actMenu }) => {
   return (
     <div id="sidebar" className={actMenu ? "hide" : " "}>
       <a href="#sdad" className="brand">
-        <img src={icon} alt="icon" />
+        <img src="../assest/admin.png" alt="icon" />
         <span className="text">Admin</span>
       </a>
       <ul className="side-menu top">
         {dashborList.map((items) => (
           <li
-            className={activeSide === items.id ? "active" : ""}
+            className={
+              window.location.pathname === "/" + items.path ? "active" : ""
+            }
             key={items.id}
             onClick={() => handleSideBar(items.id)}
           >
-            <a href="#sdad">
+            <Link to={items.path}>
               <i className={items.icon}></i>
               <span className="text">{items.name}</span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

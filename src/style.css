@@ -186,7 +186,7 @@ html {
   z-index: 1000;
 }
 #content nav.hide {
-  width: 80%;
+  width: 82%;
 }
 #content nav::before {
   content: "";
@@ -573,4 +573,22 @@ button:hover {
   #content main .table-data .todo .todo-list {
     min-width: 420px;
   }
+}
+
+.input_box {
+  position: relative;
+}
+.input_box .bx-search {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.input_box input {
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  background-color: #eeeeee;
+  padding: 10px 25px 10px 8px;
 }
