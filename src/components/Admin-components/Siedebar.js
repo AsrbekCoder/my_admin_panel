@@ -25,7 +25,7 @@ const Siedebar = ({ actMenu }) => {
   };
 
   return (
-    <div id="sidebar" className={actMenu ? "hide" : " "}>
+    <div id="sidebar" className={!actMenu ? "hide" : " "}>
       <a href="#sdad" className="brand">
         <img src="../assest/admin.png" alt="icon" />
         <span className="text">Admin</span>

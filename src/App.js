@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import AdminPannel from "./Pages/AdminPannel";
 // import LoginInputs from "./Pages/Login/LoginInputs";
 import "./style.css";
-
 class App extends Component {
   // state = {
   //   getAllCheck: null,

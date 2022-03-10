@@ -1,14 +1,23 @@
+import axios from "axios";
 import React from "react";
+
+import setProduct from "../../../redux/action/setProduct";
+import Input from "./Input";
 import "./product.scss";
+
 const AddProduct = () => {
   const fileRef = React.useRef();
   const [getFileName, setGetFileName] = React.useState(null);
   const [useImg, setUseImg] = React.useState(null);
+  const [imgHelp, setImgHelp] = React.useState(null);
+  const [sizeVal, setSize] = React.useState([]);
+
   const [brandValue, setBrandValue] = React.useState("");
-  const [discValue, setDiscValue] = React.useState("");
-  const [sizeValue, setSizeValue] = React.useState("");
   const [priseValue, setPriseValue] = React.useState("");
+
   const handleGetImg = (e) => {
+    setImgHelp(e.target.files[0]);
+
     let input = e.target;
     let reader = new FileReader();
     reader.onload = function () {
@@ -19,19 +28,38 @@ const AddProduct = () => {
     setGetFileName(input.files[0].name);
   };
 
-  const sendToDte = () => {
-    const obj = {
-      brand: brandValue,
-      main: discValue,
-      size: sizeValue,
-      prise: priseValue,
-      imgUrl: useImg,
-    };
-    console.log(obj);
+  const sendToDte = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+
+    data.append("brand", brandValue);
+    data.append("sizes", sizeVal);
+    data.append("prise", priseValue);
+    data.append("productImgUrl", imgHelp);
+
+    axios
+      .post("http://localhost:5252/api/products", data, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then((e) => console.log(e))
+      .catch((e) => console.log(e));
   };
   const removeImg = () => {
     setGetFileName(null);
     setUseImg(null);
+  };
+
+  const getSize = (e) => {
+    setSize((prev) => [...prev, +e]);
+  };
+
+  const onChangeValues = (e) => {
+    setBrandValue(e);
+  };
+  const onChangePriseValues = (e) => {
+    setPriseValue(e);
   };
   return (
     <main>
@@ -52,39 +80,10 @@ const AddProduct = () => {
       </ul>
 
       <div className="add_product">
-        <div className="product_text">
-          <input
-            type="text"
-            value={brandValue}
-            onChange={(e) => setBrandValue(e.target.value)}
-            name="brad"
-            id="brand"
-          />
-          <input
-            type="text"
-            value={discValue}
-            onChange={(e) => setDiscValue(e.target.value)}
-            name="discraption"
-            id="discraption"
-          />
-          <input
-            type="text"
-            value={sizeValue}
-            onChange={(e) => setSizeValue(e.target.value)}
-            name="size"
-            id="size"
-          />
-          <input
-            type="text"
-            value={priseValue}
-            onChange={(e) => setPriseValue(e.target.value)}
-            name="prise"
-            id="prise"
-          />
-          <button className="post_btn" onClick={sendToDte}>
-            Post
-          </button>
-        </div>
+        <Input
+          onChangeValues={onChangeValues}
+          onChangePriseValues={onChangePriseValues}
+        />
         <div className="product_img">
           <div
             className="product_box"

@@ -28,6 +28,10 @@
           &:hover {
             box-shadow: 0 0 10px #6dd5fa;
           }
+          &.disabled {
+            pointer-events: none;
+            background-color: #dbdbdb;
+          }
         }
         input {
           height: 35px;
@@ -42,6 +46,39 @@
             box-shadow: 0 0 5px #6dd5fa;
             border: 1px solid rgb(0, 132, 240);
           }
+        }
+        .size_box {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          width: 100%;
+          p {
+            cursor: pointer;
+            border-radius: 50%;
+            border: 1px solid #a9b8ff;
+            padding: 5px;
+            margin: 5px 10px;
+
+            &.active {
+              background-color: red;
+              color: #6dd5fa;
+            }
+          }
+        }
+        .number_input {
+          width: 70px;
+          font-size: 15px;
+          .active {
+            &:focus {
+              box-shadow: none;
+              border: 1px solid red;
+            }
+          }
+        }
+        // .active {
+        // }
+        .number_input:not(:first-child) {
+          margin-left: 15px;
         }
       }
 
@@ -117,6 +154,27 @@
           cursor: pointer;
           right: 5px;
         }
+      }
+    }
+  }
+}
+
+.size {
+  &_numbers {
+    display: flex;
+  }
+  &_btn {
+    p {
+      position: relative;
+      width: 80px;
+      border-radius: 30px;
+      padding: 10px 10px;
+      margin: 15px 5px;
+      background-color: #dbdbdb;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      span {
+        position: absolute;
+        right: 15px;
       }
     }
   }

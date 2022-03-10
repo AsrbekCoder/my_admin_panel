@@ -1,10 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const SectionNavbar = ({ hendleClickMenu, hendleChangeColor, actMenu }) => {
+  const main = useSelector((state) => state.getProduct.items);
+  console.log(main);
   return (
-    <nav className={!actMenu ? "hide" : ""}>
+    <nav className={actMenu ? "hide" : ""}>
       <i className="bx bx-menu" onClick={() => hendleClickMenu()}></i>
-      <a href="https://iqlim.uz" className="nav-link">
+      <a href="\" className="nav-link">
         Categories
       </a>
       <form action="#">
@@ -22,11 +25,11 @@ const SectionNavbar = ({ hendleClickMenu, hendleChangeColor, actMenu }) => {
         onChange={() => hendleChangeColor()}
       />
       <label htmlFor="switch-mode" className="switch-mode"></label>
-      <a href="https://iqlim.uz" className="notification">
+      <a href="\" className="notification">
         <i className="bx bxs-bell"></i>
         <span className="num">8</span>
       </a>
-      <a href="https://iqlim.uz" className="profile">
+      <a href="\" className="profile">
         {/*<img src={man} alt="logoImg" />*/}
       </a>
     </nav>
