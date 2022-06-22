@@ -1,9 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
 const SectionNavbar = ({ hendleClickMenu, hendleChangeColor, actMenu }) => {
-  const main = useSelector((state) => state.getProduct.items);
-  console.log(main);
   return (
     <nav className={actMenu ? "hide" : ""}>
       <i className="bx bx-menu" onClick={() => hendleClickMenu()}></i>
